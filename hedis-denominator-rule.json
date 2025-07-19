@@ -1,0 +1,89 @@
+{
+  "id": "hedis-denominator-2024",
+  "name": "HEDIS Denominator - Depression Screening",
+  "description": "Screening for depression among members 12 years of age and older at the start of the measurement period with exclusions for prior depression/bipolar diagnosis, death, or hospice care",
+  "rules": {
+    "id": "root",
+    "conditions": [
+      {
+        "id": "age-eligibility",
+        "column": "MemberAge",
+        "operator": "greater_equal",
+        "value": "12"
+      },
+      {
+        "id": "enrollment-active",
+        "column": "EnrollmentStatus",
+        "operator": "equals",
+        "value": "Active"
+      },
+      {
+        "id": "enrollment-start",
+        "column": "EnrollmentStartDate",
+        "operator": "less_equal",
+        "value": "2024-01-01"
+      },
+      {
+        "id": "enrollment-end",
+        "column": "EnrollmentEndDate",
+        "operator": "greater_equal",
+        "value": "2024-12-31"
+      },
+      {
+        "id": "enrollment-gap",
+        "column": "EnrollmentGapDays",
+        "operator": "less_equal",
+        "value": "45"
+      }
+    ],
+    "logic": "AND",
+    "groups": [
+      {
+        "id": "exclusions-group",
+        "name": "Exclusion Criteria",
+        "conditions": [
+          {
+            "id": "depression-history",
+            "column": "DepressionDiagnosisDate",
+            "operator": "between",
+            "value": "2023-01-01",
+            "value2": "2023-12-31"
+          },
+          {
+            "id": "bipolar-history",
+            "column": "BipolarDisorderDate",
+            "operator": "less_equal",
+            "value": "2023-12-31"
+          },
+          {
+            "id": "death-during-year",
+            "column": "DeathDate",
+            "operator": "between",
+            "value": "2024-01-01",
+            "value2": "2024-12-31"
+          },
+          {
+            "id": "hospice-start",
+            "column": "HospiceStartDate",
+            "operator": "between",
+            "value": "2024-01-01",
+            "value2": "2024-12-31"
+          },
+          {
+            "id": "hospice-end",
+            "column": "HospiceEndDate",
+            "operator": "between",
+            "value": "2024-01-01",
+            "value2": "2024-12-31"
+          }
+        ],
+        "logic": "OR",
+        "groups": [],
+        "negated": true
+      }
+    ],
+    "negated": false
+  },
+  "createdAt": "2024-01-15T10:00:00.000Z",
+  "updatedAt": "2024-01-15T10:00:00.000Z"
+}
